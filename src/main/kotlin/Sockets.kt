@@ -5,6 +5,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import java.awt.SystemColor.text
 import java.time.Duration
 import java.util.Collections
 import kotlin.time.Duration.Companion.seconds
@@ -16,28 +17,35 @@ fun Application.configureSockets() {
         maxFrameSize = Long.MAX_VALUE
         masking = false
     }
+
     routing {
         val connections = Collections.synchronizedSet<Connection?>(LinkedHashSet())
         webSocket("/chat") {
-            println("Add User")
             val thisConnection = Connection(this)
             connections += thisConnection
+
             try {
                 for (frame in incoming) {
-                    when (frame) {
-                        is Frame.Text -> {
-                            val receivedText = frame.readText()
-                            val textWithUserName = "[${thisConnection.name}] $receivedText"
-                            connections.forEach {
-                                it.session.send(textWithUserName)
+                    if (frame is Frame.Text) {
+                        val text = frame.readText()
+
+                        if (thisConnection.name.isEmpty()) {
+                            // first message -> name
+                            thisConnection.name = text.trim()
+                            // 본인한테만 네임 설정
+                            outgoing.send(Frame.Text("닉네임: ${thisConnection.name}"))
+                        } else {
+                            // 네임 설정 후엔 전체한테 메시지
+                            val message = "[${thisConnection.name}]: $text"
+                            connections.forEach { conn ->
+                                conn.session.send(Frame.Text(message))
                             }
-                        } else -> {}
+                        }
                     }
                 }
             } catch (e: Exception) {
-                println(e.localizedMessage)
-            }finally {
-                println("Remove $thisConnection!")
+                println("Error: ${e.localizedMessage}")
+            } finally {
                 connections -= thisConnection
             }
         }
