@@ -33,7 +33,7 @@ fun Application.configureSockets() {
                             // first message -> name
                             thisConnection.name = text.trim()
                             // 본인한테만 네임 설정
-                            outgoing.send(Frame.Text("닉네임: ${thisConnection.name}"))
+                            outgoing.send(Frame.Text("내 닉네임: ${thisConnection.name}"))
                         } else {
                             // 네임 설정 후엔 전체한테 메시지
                             val message = "${thisConnection.name}: $text"
