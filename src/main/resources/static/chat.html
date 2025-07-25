@@ -6,11 +6,18 @@
   <link rel="stylesheet" href="chat.css">
 </head>
 <body>
-<h2>Chat</h2>
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>Live Chat</h2>
+  </div>
 
-<div id="chatLog"></div>
-<input id="messageInput" type="text" placeholder="메시지 입력 ㄱㄱ" />
-<button id="sendBtn">전송</button>
+  <div id="chatLog"></div>
+
+  <div class="chat-input">
+    <input id="messageInput" type="text" placeholder="Input Message" />
+    <button id="sendBtn">전송</button>
+  </div>
+</div>
 
 <script src="chat.js"></script>
 </body>
