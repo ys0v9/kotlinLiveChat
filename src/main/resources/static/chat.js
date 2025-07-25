@@ -7,7 +7,7 @@ const sendBtn = document.getElementById("sendBtn");
 
 let ws = null;
 
-nicknameBtn.onclick = () => {
+function setNickname() {
     const nickname = nicknameInput.value.trim();
     if (nickname === "") {
         alert("닉네임을 입력해주세요.");
@@ -35,7 +35,15 @@ nicknameBtn.onclick = () => {
     ws.onerror = (error) => {
         appendLog("에러: " + error.message);
     };
-};
+}
+
+nicknameInput.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        setNickname();
+    }
+});
+
+nicknameBtn.onclick = setNickname;
 
 sendBtn.onclick = sendMessage;
 messageInput.onkeyup = (event) => {
