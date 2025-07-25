@@ -36,7 +36,7 @@ fun Application.configureSockets() {
                             outgoing.send(Frame.Text("닉네임: ${thisConnection.name}"))
                         } else {
                             // 네임 설정 후엔 전체한테 메시지
-                            val message = "[${thisConnection.name}]: $text"
+                            val message = "${thisConnection.name}: $text"
                             connections.forEach { conn ->
                                 conn.session.send(Frame.Text(message))
                             }
