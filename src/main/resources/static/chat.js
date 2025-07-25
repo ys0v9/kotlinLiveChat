@@ -45,12 +45,12 @@ nicknameInput.addEventListener("keyup", (event) => {
 
 nicknameBtn.onclick = setNickname;
 
-sendBtn.onclick = sendMessage;
-messageInput.onkeyup = (event) => {
-    if(event.key === "Enter") {
+sendBtn.addEventListener("click", sendMessage);
+messageInput.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
         sendMessage();
     }
-};
+});
 
 function sendMessage() {
     if (!ws || ws.readyState !== WebSocket.OPEN) {
