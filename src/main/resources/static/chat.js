@@ -1,23 +1,40 @@
-const ws = new WebSocket("wss://af35149bbef9.ngrok-free.app/chat");
-
+const nicknameSection = document.getElementById("nicknameSection");
+const nicknameInput = document.getElementById("nicknameInput");
+const nicknameBtn = document.getElementById("nicknameBtn");
 const chatLog = document.getElementById("chatLog");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// ws.onopen = () => {
-//     appendLog("서버 연결 성공");
-// };
+let ws = null;
 
-ws.onmessage = (event) => {
-    appendLog(event.data);
-};
+nicknameBtn.onclick = () => {
+    const nickname = nicknameInput.value.trim();
+    if (nickname === "") {
+        alert("닉네임을 입력해주세요.");
+        return;
+    }
 
-ws.onclose = () => {
-    appendLog("서버 연결 끊김");
-};
+    ws = new WebSocket("wss://9a1eec0a5ef5.ngrok-free.app/chat");
 
-ws.onerror = (error) => {
-    appendLog("에러: " + error.message);
+    ws.onopen = () => {
+        ws.send(nickname);
+        nicknameSection.style.display = "none";
+        chatLog.style.display = "block";
+        document.querySelector(".chat-input").style.display = "flex";
+        appendLog("서버에 연결되었습니다.");
+    };
+
+    ws.onmessage = (event) => {
+        appendLog(event.data);
+    };
+
+    ws.onclose = () => {
+        appendLog("서버 연결 끊김");
+    };
+
+    ws.onerror = (error) => {
+        appendLog("에러: " + error.message);
+    };
 };
 
 sendBtn.onclick = sendMessage;
@@ -28,6 +45,10 @@ messageInput.onkeyup = (event) => {
 };
 
 function sendMessage() {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+        alert("서버 연결 X");
+        return;
+    }
     const msg = messageInput.value.trim();
     if(msg === "") return;
     ws.send(msg);

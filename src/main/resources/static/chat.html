@@ -6,18 +6,28 @@
   <link rel="stylesheet" href="chat.css">
 </head>
 <body>
+<body>
 <div class="chat-container">
   <div class="chat-header">
     <h2>Live Chat</h2>
   </div>
 
-  <div id="chatLog"></div>
+  <div id="nicknameSection">
+    <input id="nicknameInput" type="text" placeholder="닉네임을 입력하세요" />
+    <button id="nicknameBtn">확인</button>
+  </div>
 
-  <div class="chat-input">
+  <div id="chatLog" style="display:none;"></div>
+
+  <div class="chat-input" style="display:none;">
     <input id="messageInput" type="text" placeholder="Input Message" />
     <button id="sendBtn">전송</button>
   </div>
 </div>
+
+<script src="chat.js"></script>
+</body>
+
 
 <script src="chat.js"></script>
 </body>
