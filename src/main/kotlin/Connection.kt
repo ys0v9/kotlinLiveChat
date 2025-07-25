@@ -7,5 +7,5 @@ class Connection(val session: DefaultWebSocketSession) {
     companion object {
         var lastId = AtomicInteger(0)
     }
-    var name = "user${lastId.getAndIncrement()}"
+    var name = "유저${lastId.getAndIncrement() + 1}"
 }
