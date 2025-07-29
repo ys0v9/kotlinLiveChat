@@ -14,7 +14,7 @@ function setNickname() {
         return;
     }
 
-    ws = new WebSocket("wss://f90301db302e.ngrok-free.app/chat");
+    ws = new WebSocket("wss://b567048faf82.ngrok-free.app/chat");
 
     ws.onopen = () => {
         ws.send(nickname);

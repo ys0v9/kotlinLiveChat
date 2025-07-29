@@ -19,13 +19,13 @@ fun Application.configureRouting() {
             defaultResource("static/chat.html")
         }
 
-        webSocket("/chat") {
-            for (frame in incoming) {
-                if (frame is Frame.Text) {
-                    val text = frame.readText()
-                    outgoing.send(Frame.Text("채팅: $text"))
-                }
-            }
-        }
+//        webSocket("/chat") {
+//            for (frame in incoming) {
+//                if (frame is Frame.Text) {
+//                    val text = frame.readText()
+//                    outgoing.send(Frame.Text("채팅: $text"))
+//                }
+//            }
+//        }
     }
 }
